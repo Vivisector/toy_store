@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Магазин игр{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать в магазин игр!</h1>
+
+    <!-- Список игр -->
+    <ul>
+        {% for game in page_obj %}
+            <li>
+                <strong>{{ game.title }}</strong> | {{ game.description }} <br>
+                Стоимость: {{ game.price }} <br>
+                <button type="button">Купить</button>
+            </li>
+        {% empty %}
+            <p>Нет игр для отображения.</p>
+        {% endfor %}
+    </ul>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
