@@ -1,0 +1,17 @@
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+.pagination .step-links a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.pagination .step-links a:hover {
+    background-color: #f0f0f0;
+}
+.pagination .step-links span {
+    margin: 0 5px;
+}

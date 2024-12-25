@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+
+{% block pagename %}
+Новости
+{% endblock %}
+
+{% block menu %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h1>Новости</h1>
+    {% for new in page_obj %}
+        <div>
+            <h3>{{ new.title }}</h3>
+            <p>{{ new.content }}</p>
+            <p><small>Дата публикации: {{ new.pub_date }}</small></p>
+        </div>
+    {% endfor %}
+
+    <!-- Пагинация -->
+<div class="pagination">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; Первая</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+            </li>
+        {% endif %}
+
+        <!-- Номера страниц -->
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegister
 from .models import Buyer
-from .models import Game
+from .models import Game, News
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from .forms import UserRegister
@@ -14,11 +14,11 @@ def home(request):
 def store(request):
     # Получаем все игры из базы данных
     games = Game.objects.all()
-    paginator = Paginator(games, 5)  # 10 игр на странице
+    paginator = Paginator(games, 5)  # 5 игр на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'main/store.html', {'page_obj': page_obj})
-    return render(request, 'main/store.html', {'games': games})
+    # return render(request, 'main/store.html', {'games': games})
 
 def cart(request):
     return render(request, 'main/cart.html')
@@ -33,6 +33,15 @@ def game_list(request):
 
     # Передаем игры в контексте шаблона
     return render(request, 'main/game_list.html', {'games': games})
+
+def news_list(request):
+    # Получаем все новости из базы данных
+    news = News.objects.all().order_by('-pub_date')
+    paginator = Paginator(news, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'main/news.html', {'page_obj': page_obj})
+
 
 def register(request):
     if request.method == "POST":
